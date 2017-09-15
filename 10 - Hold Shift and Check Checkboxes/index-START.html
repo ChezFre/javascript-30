@@ -98,7 +98,44 @@
     </div>
   </div>
 
-<script>
-</script>
+    <script>
+
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes = Array.from(checkboxes),
+            lastIndex  = -1,
+            shiftKey   = false;
+
+        function onInput(e) {
+            let index = checkboxes.indexOf( this );
+
+            if( shiftKey && lastIndex >= 0 && this.checked ) {
+                let start = Math.min(index, lastIndex);
+                let end   = Math.max(index, lastIndex);
+
+                for(; start <= end; start++) {
+                    checkboxes[start].checked = true;
+                }
+            }
+            
+            
+            lastIndex = index;
+        }
+
+        function onKeyDown(e) {
+            if( e.keyCode === 16 )
+                shiftKey = true;
+        }
+
+        function onKeyUp(e) {
+            if( e.keyCode === 16 )
+                shiftKey = false;
+        }
+
+        checkboxes.forEach( checkbox => checkbox.addEventListener('input', onInput) );   
+        
+        document.addEventListener('keydown', onKeyDown );
+        document.addEventListener('keyup', onKeyUp );
+
+    </script>
 </body>
 </html>
