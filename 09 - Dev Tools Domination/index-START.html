@@ -18,28 +18,61 @@
     }
 
     // Regular
+    console.log('bla');
 
     // Interpolated
+    console.log('bla %s string', 'test');
 
     // Styled
+    console.log('%c this is a styled msg', 'font-size: 20px; background-color: green;');
 
     // warning!
+    console.warn('Warning');
 
     // Error :|
+    console.error('Error!');
 
     // Info
+    console.info('This is some info');
 
     // Testing
+    console.assert(1 !== 1, '1 should be equal to 1');
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.log( document.querySelector('p') );
+    console.dir( document.querySelector('p') );
 
     // Grouping together
+    dogs.forEach(dog => {
+        console.groupCollapsed(dog.name);
+        console.log(`${dog.name} is ${dog.age} years old`);
+        console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+        console.groupEnd(dog.name);
+    });
+    console.groupEnd('nameEnd');
 
     // counting
+    console.count('word');
+    console.count('laptop');
+    console.count('laptop');
+    console.count('laptop');
+    console.count('laptop');
+    console.count('laptop');
+    console.count('word');
 
     // timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/chezfre')
+        .then(data => data.json())
+        .then(data => {
+            console.timeEnd('fetching data');
+            console.log(data);
+        });
+
+    console.table(dogs);
 
   </script>
 </body>
