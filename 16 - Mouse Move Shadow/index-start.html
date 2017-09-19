@@ -29,12 +29,40 @@
   }
 
   h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    /* text-shadow: 10px 10px 0 rgba(0,0,0,1); */
     font-size: 100px;
   }
   </style>
 
 <script>
+
+    const hero = document.querySelector('.hero');
+    const text = hero.querySelector('h1');
+
+    const { offsetWidth: width, offsetHeight: height } = hero;
+
+    const maxOffset = 8;
+
+    function shadow(e) {
+        // console.log( e );
+        let { clientX: x, clientY: y } = e;
+        let halfWidth = window.outerWidth / 2;
+        let halfHeight = window.outerHeight / 2;
+
+        // console.log(e.offsetX, e.offsetY);
+
+        const offsetX = Math.round( ((x - halfWidth) * -1) / halfWidth * maxOffset);
+        const offsetY = Math.round( ((y - halfHeight) * -1) / halfHeight * maxOffset);
+
+        text.style.textShadow = `
+            ${offsetX}px ${offsetY}px 0 rgba(0,0, 255,.2),
+            ${offsetX}px ${offsetY * -1}px 0 rgba(255,0,0,.2),
+            ${offsetX * -1}px ${offsetY}px 0 rgba(0,255,0,.2)
+        `;
+    }
+
+    document.body.addEventListener('mousemove', shadow);
+
 </script>
 </body>
 </html>
