@@ -76,7 +76,7 @@
   }
   body {
     margin: 0;
-    min-height: 100vh;
+    min-height: 200vh;
     background:
       linear-gradient(45deg, hsla(340, 100%, 55%, 1) 0%, hsla(340, 100%, 55%, 0) 70%),
       linear-gradient(135deg, hsla(225, 95%, 50%, 1) 10%, hsla(225, 95%, 50%, 0) 80%),
@@ -214,6 +214,47 @@
 </style>
 
 <script>
+
+    const triggers = document.querySelectorAll('.cool > li');
+    const background = document.querySelector('.dropdownBackground');
+    const nav        = document.querySelector('.top');
+    
+    let timeout;
+
+    function handleEnter(e) {
+        clearTimeout(timeout);
+        this.classList.add('trigger-enter');
+
+        timeout = setTimeout( () => this.classList.add('trigger-enter-active', 150) );
+
+        const rect = this.querySelector('.dropdown').getBoundingClientRect();  
+        
+
+        const coords =  {
+            top: rect.top - nav.getBoundingClientRect().top,
+            left: rect.left - nav.getBoundingClientRect().left,
+            width: rect.width,
+            height: rect.height
+        }
+
+        background.style.transform = `translate( ${coords.left}px, ${coords.top}px )`;
+        background.style.width     = coords.width + 'px';
+        background.style.height    = coords.height + 'px';
+
+        background.classList.add('open');
+    }
+
+    function handleLeave(e) {
+        this.classList.remove('trigger-enter-active', 'trigger-enter');
+
+        background.classList.remove('open');
+    }
+
+    triggers.forEach( trigger => {
+        trigger.addEventListener('mouseenter', handleEnter);
+        trigger.addEventListener('mouseleave', handleLeave);
+    });
+
 </script>
 
 </body>
