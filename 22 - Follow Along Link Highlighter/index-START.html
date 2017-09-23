@@ -27,6 +27,38 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    const triggers = document.querySelectorAll('a');
+    const highlight = document.createElement('span');
+          highlight.classList.add('highlight');
+
+    let highlightedElement;
+
+    document.body.append(highlight);
+
+    function setHighlight( el ) {
+        highlightedElement = el;
+        const rect = el.getBoundingClientRect();
+
+        const coords = Object.assign({}, rect, {
+            top: rect.top + window.scrollY,
+            left: rect.left + window.scrollX
+        })
+
+        highlight.style.transform   = `translateX(${coords.left}px) translateY(${coords.top}px)`;
+        highlight.style.width  = rect.width + 'px';
+        highlight.style.height = rect.height + 'px';
+    }
+
+    function correctHighlight(e) {
+        if( highlightedElement) {
+            setHighlight(highlightedElement);
+        }
+    }
+
+    Array.from(triggers).forEach( trigger => trigger.addEventListener('mouseenter', e => setHighlight(e.currentTarget) ) );
+
+    window.addEventListener('resize', correctHighlight);
+    
   </script>
 </body>
 </html>
